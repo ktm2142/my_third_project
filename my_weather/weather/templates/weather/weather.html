@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast for {{ city_name }}</title>
+</head>
+<body>
+<form method="get">
+    <input type="text" name="city" placeholder="Enter city name">
+    <button type="submit">Get Weather</button>
+</form>
+<h1>Weather in {{ city_name }}</h1>
+
+<h2>Current Conditions:</h2>
+<p>Temperature: {{ current_conditions.Temperature.Metric.Value }}°C</p>
+<p>Weather: {{ current_conditions.WeatherText }}</p>
+
+<h2>5-Day Forecast:</h2>
+{% for day in forecast %}
+<h3>{{ day.Date|date:"l, F j" }}</h3>
+<p>Min: {{ day.Temperature.Minimum.Value }}°C</p>
+<p>Max: {{ day.Temperature.Maximum.Value }}°C</p>
+<p>Day: {{ day.Day.IconPhrase }}</p>
+<p>Night: {{ day.Night.IconPhrase }}</p>
+{% endfor %}
+{% if error %}
+<p style="color: red;">{{ error }}</p>
+{% else %}
+<!-- rest of your weather display code -->
+{% endif %}
+</body>
+</html>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    h1, h2, h3 {
+        color: #333;
+    }
+    .forecast-day {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+</style>
